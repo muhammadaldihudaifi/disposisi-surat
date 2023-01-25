@@ -1,16 +1,17 @@
-<?php 
-defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
 class User_model extends CI_Model
 {
-    protected $_table ='tb_user';
+    protected $_table = 'tb_user';
     protected $primary = 'id';
 
     public function getAll()
     {
-        return $this->db->where('is_active',1)->get($this->_table)->result();
+        return $this->db->where('is_active', 1)->get($this->_table)->result();
     }
 
-    public function save(){
+    public function save()
+    {
         $data = array(
             'username' => htmlspecialchars($this->input->post('username'), true),
             'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
@@ -20,7 +21,7 @@ class User_model extends CI_Model
             'role' => htmlspecialchars($this->input->post('role'), true),
             'is_active' => 1,
         );
-        return $this->db->insert($this->_table,$data);
+        return $this->db->insert($this->_table, $data);
     }
 
     public function getById($id)
@@ -40,7 +41,7 @@ class User_model extends CI_Model
             'role' => htmlspecialchars($this->input->post('role'), true),
             'is_active' => 1,
         );
-        return $this->db->set($data)->where($this->primary,$id)->update($this->_table);
+        return $this->db->set($data)->where($this->primary, $id)->update($this->_table);
         // if($this->db->affected_rows()>0){
         // $this->session->set_flashdata("success","Data user Berhasil Di Update");
         // }
@@ -48,9 +49,9 @@ class User_model extends CI_Model
 
     public function delete($id)
     {
-        $this->db->where('id',$id)->delete($this->_table);
-        if($this->db->affected_rows()>0){
-            $this->session->set_flashdata("success","Data user Berhasil Di Delete");
+        $this->db->where('id', $id)->delete($this->_table);
+        if ($this->db->affected_rows() > 0) {
+            $this->session->set_flashdata("success", "Data user Berhasil Di Delete");
         }
     }
 }
